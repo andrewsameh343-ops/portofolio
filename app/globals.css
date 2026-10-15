@@ -1,0 +1,117 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* ==========================================================================
+   THEME — change the palette here. Everything else reads these variables.
+   ========================================================================== */
+:root {
+  --bg: #0a0a12; /* near-black navy */
+  --surface: #14142a; /* deep navy */
+  --accent: #d7263d; /* crimson */
+  --accent-soft: #8e1b2e; /* soft crimson */
+  --text: #f4f4f8; /* off-white */
+  --muted: #a0a0b8; /* muted text */
+  --faint: rgba(255, 255, 255, 0.04); /* giant faded words */
+  --line: rgba(255, 255, 255, 0.1);
+  --paper: #efe9dc; /* taped sticker paper */
+
+  --radius: 0.75rem;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-paper: var(--paper);
+  --color-ring: var(--accent);
+  --color-border: var(--line);
+
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-anton), 'Arial Narrow', Impact, sans-serif;
+  --font-script: var(--font-kaushan), cursive;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-sway: sway 4s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-14px) rotate(1deg); }
+  }
+  @keyframes sway {
+    0%, 100% { transform: rotate(-4deg); }
+    50% { transform: rotate(4deg); }
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--text);
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  dialog::backdrop {
+    background: rgba(5, 5, 10, 0.85);
+    backdrop-filter: blur(4px);
+  }
+}
+
+@layer components {
+  /* Huge outlined background words */
+  .outline-word {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.07);
+  }
+
+  /* Monochrome brand icon rendered via CSS mask so it can take any color */
+  .mask-icon {
+    background-color: currentColor;
+    mask: var(--icon) center / contain no-repeat;
+    -webkit-mask: var(--icon) center / contain no-repeat;
+  }
+
+  /* Subtle paper grain + halftone dots for sections */
+  .halftone {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
